@@ -19,9 +19,9 @@
                                 }, 3000); // 3000 milliseconds = 3 seconds
                             </script>
                         @endif
-                        <div class="row mt-2">
-                            <h4 class="mx-2 header-title">Category :</h4>
+                        <div class="row mt-2">       
                             @if (auth()->user()->getRoleNames()->first() != 'Kiosk Participant')
+                                <h4 class="mx-2 header-title">Category :</h4>
                                 <div class="d-flex justify-content-end">
                                     <form id="filterForm" method="GET">
                                         <select id="kiosk-complaint" name="category" class="form-control" onchange="submitForm()">
@@ -34,6 +34,7 @@
                                 </div>
                             @endif
                             @if (auth()->user()->getRoleNames()->first() == 'Kiosk Participant')
+                                <h4 class="mx-2 header-title"></h4> 
                                 <a href="{{ route('complaints.create') }}" class="btn btn-danger btn-sm"
                                         style="position: absolute; right:2%;">+ Add
                                         Complaint</a>
