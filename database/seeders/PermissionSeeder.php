@@ -133,6 +133,7 @@ class PermissionSeeder extends Seeder
 
         // Assign roles to each test user
         $testUsers = [
+            'admin@admin.com' => 'Super Admin',
             'admin@example.com' => 'Admin',
             'pupuk@example.com' => 'PUPUK Admin',
             'vendor@example.com' => 'Kiosk Participant',

@@ -32,8 +32,8 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group mb-3">
-                                        <label for="kiosk-complaint">Kiosk Complaint</label>
-                                        <input type="text" value="Repair Kiosk" class="form-control" readonly>
+                                        <label for="kiosk-complaint">Category</label>
+                                        <textarea class="form-control" name="category" rows="1">{{ $complaint->category }}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">

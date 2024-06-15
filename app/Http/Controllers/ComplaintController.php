@@ -12,17 +12,24 @@ class ComplaintController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $selected_category = $request->has('category') ? $request->category : null;
+
+        $complaints = new Complaint();
 
         if (auth()->user()->getRoleNames()->contains('Kiosk Participant')) {
-            $complaints = Complaint::where('user_id', auth()->user()->id)->paginate(10);
-        }else if(auth()->user()->getRoleNames()->contains('Technical Team')){
-            $complaints = Complaint::all();
+            $complaints = $complaints->where('user_id', auth()->user()->id);
         }
-        //$this->authorize('view-any', Complaint::class);
-        
-        return view('complaints.index', compact('complaints'));
+
+        $complaints = $complaints
+            ->when($selected_category != null, function ($query) use ($selected_category) {
+                return $query->where('category', $selected_category);
+            })
+            ->paginate(10);
+
+        $this->authorize('view-any', Complaint::class);
+        return view('complaints.index', compact('complaints', 'selected_category'));
     }
 
     /**
@@ -44,7 +51,7 @@ class ComplaintController extends Controller
 
         $request->merge([
             'kiosk_participant_id' => $kiosk_participant->id,
-            'user_id' => auth()->user()->id,
+            'user_id' => auth()->user()->id
         ]);
 
         Complaint::create($request->all());
@@ -96,10 +103,10 @@ class ComplaintController extends Controller
         $complaint = Complaint::find($id);
         if (auth()->user()->getRoleNames()->contains('Kiosk Participant')) {
             $complaint->status = "Closed";
-        }else if(auth()->user()->getRoleNames()->contains('Technical Team')){
+        } else if (auth()->user()->getRoleNames()->contains('Technical Team')) {
             $complaint->status = "Completed";
         }
-    
+
         $complaint->save();
         return redirect()->route('complaints.index')
             ->with('success', "Complaint Status Updated Successfully!");
@@ -111,7 +118,7 @@ class ComplaintController extends Controller
     public function destroy($id)
     {
         $complaint = Complaint::find($id);
-        $complaint ->delete($complaint);
+        $complaint->delete($complaint);
         return redirect()->route('complaints.index')
             ->with('success', "Complaint Deleted Successfully!");
     }

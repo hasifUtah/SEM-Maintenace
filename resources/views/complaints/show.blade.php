@@ -50,8 +50,8 @@
                                 <p>{{ $complaint->user->name }}</p>
                             </div>
                             <div class="col-lg-6">
-                                <label for="example-week">Kiosk Complaint</label>
-                                <p>Repair Kiosk</p>
+                                <label for="example-week">Category</label>
+                                <p>{{ $complaint->category }}</p>
                             </div>
                             <div class="col-lg-6 mt-2">
                                 <label for="example-week">No. Telephone</label>

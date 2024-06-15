@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreign('kiosk_participant_id')->references('id')->on('kiosk_participants')->onUpdate('CASCADE')->onDelete('CASCADE');
             $table->foreignId('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('CASCADE')->onDelete('CASCADE');
+            $table->string('category');
             $table->string('description');
             $table->string('assign_to')->nullable();
             $table->enum('status', ['Pending', 'In Progress', 'Completed', 'Closed'])->default('Pending');

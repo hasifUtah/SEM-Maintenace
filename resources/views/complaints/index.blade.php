@@ -20,13 +20,30 @@
                             </script>
                         @endif
                         <div class="row mt-2">
-                            <h4 class="mx-2 header-title">Kiosk Complaint</h4>
+                            <h4 class="mx-2 header-title">Category :</h4>
+                            @if (auth()->user()->getRoleNames()->first() != 'Kiosk Participant')
+                                <div class="d-flex justify-content-end">
+                                    <form id="filterForm" method="GET">
+                                        <select id="kiosk-complaint" name="category" class="form-control" onchange="submitForm()">
+                                            <option @if ($selected_category == "Cleanliness") selected @endif value="Cleanliness">Cleanliness</option>
+                                            <option @if ($selected_category == "Repair") selected @endif value="Repair">Repair</option>
+                                            <option @if ($selected_category == "Safety Hazards") selected @endif value="Safety Hazards">Safety Hazards</option>
+                                            <option @if ($selected_category == "Insufficient Amenities") selected @endif value="Insufficient Amenities">Insufficient Amenities</option>
+                                        </select>
+                                    </form>
+                                </div>
+                            @endif
                             @if (auth()->user()->getRoleNames()->first() == 'Kiosk Participant')
                                 <a href="{{ route('complaints.create') }}" class="btn btn-danger btn-sm"
-                                    style="position: absolute; right:2%;">+ Add
-                                    Complaint</a>
+                                        style="position: absolute; right:2%;">+ Add
+                                        Complaint</a>
                             @endif
                         </div>
+                        <script>
+                            function submitForm() {
+                                document.getElementById('filterForm').submit();
+                            }
+                        </script>
                         <br>
 
                         <table id="basic-datatable" class="table dt-responsive nowrap w-100">
@@ -34,6 +51,7 @@
                                 <tr>
                                     <th>No.</th>
                                     <th>Kiosk Number</th>
+                                    <th>category</th>
                                     <th>Complaint Description</th>
                                     <th>Complaint Date</th>
                                     @if (auth()->user()->getRoleNames()->first() == 'Technical Team')
@@ -61,6 +79,7 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>FKK{{ str_pad($complaint->kioskParticipant->kiosk_id, 2, '0', STR_PAD_LEFT) }}
                                         </td>
+                                        <td>{{ $complaint->category }}</td>
                                         <td>{{ $complaint->description }}</td>
                                         <td>{{ $complaint->created_at->format('d-m-Y') }}</td>
                                         @if (auth()->user()->getRoleNames()->first() == 'Technical Team')

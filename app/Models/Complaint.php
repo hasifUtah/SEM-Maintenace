@@ -16,6 +16,7 @@ class Complaint extends Model
     protected $fillable = [
         'kiosk_participant_id',
         'user_id',
+        'category',
         'description',
         'assign_to',
         'status',

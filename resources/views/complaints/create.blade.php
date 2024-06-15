@@ -31,11 +31,15 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group mb-3">
-                                        <label for="kiosk-complaint">Kiosk Complaint</label>
-                                        <input type="text" id="kiosk-complaint" class="form-control"
-                                            value="Repair Kiosk" readonly>
+                                        <label for="kiosk-complaint">Complaint category</label>
+                                        <select id="kiosk-complaint" name="category" class="form-control">
+                                            <option value="Cleanliness">Cleanliness</option>
+                                            <option value="Repair" selected>Repair</option>
+                                            <option value="Safety Hazards">Safety Hazards</option>
+                                            <option value="Insufficient Amenities">Insufficient Amenities</option>
+                                        </select>
                                     </div>
-                                </div>
+                                </div>                                
                                 <div class="col-lg-6">
                                     <div class="form-group mb-3">
                                         <label for="phone">No. Telephone</label>
